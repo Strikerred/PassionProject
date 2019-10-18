@@ -45,7 +45,7 @@ It is a free download invitation card app for birthday parties. This app will al
 
 ### Using a tool (ie. Draw.io or Visio), create an entity relationship diagram.
 
-![ERD](/images/ERD.jpg)
+![ERD](/images/ERD.png)
 
 ### Create a high-fidelity prototype that accurately summarizes the different user flows for your must-have features.
 

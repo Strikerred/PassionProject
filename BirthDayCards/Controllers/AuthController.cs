@@ -108,6 +108,20 @@ namespace BirthDayCards.Controllers
             return Json(jsonResponse);
         }
 
+        [HttpPost]
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            dynamic jsonResponse = new JObject();
+
+            await _signInManager.SignOutAsync();
+
+            jsonResponse.token = "";
+            jsonResponse.status = "Logged Out";
+
+            return Json(jsonResponse);
+        }
+
         List<Claim> AddUserRoleClaims(List<Claim> claims, string Email)
         {
             // Get current user's role. 

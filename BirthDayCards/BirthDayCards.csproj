@@ -8,6 +8,9 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Amazon.AspNetCore.Identity.Cognito" Version="1.0.4" />
+    <PackageReference Include="Amazon.Extensions.CognitoAuthentication" Version="1.0.3" />
+    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.3.108.11" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />

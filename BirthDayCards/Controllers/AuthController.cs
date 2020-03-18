@@ -63,7 +63,7 @@ namespace BirthDayCards.Controllers
                     _context.Users.Add(userRole);
                     _context.SaveChanges();
 
-                    var tokenString = GenerateJSONWebToken(user, loginVM);
+                    var tokenString = GenerateJSONWebToken(user);
                     jsonResponse.token = tokenString;
                     jsonResponse.status = "OK";
                     return Json(jsonResponse);
@@ -74,32 +74,66 @@ namespace BirthDayCards.Controllers
             return Json(jsonResponse);
         }
 
+        [HttpPost]
+        [Route("Login")]
+        public async Task<JsonResult> Login([FromBody]LoginVM loginVM)
+        {
+            dynamic jsonResponse = new JObject();
+
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, loginVM.RememberMe, lockoutOnFailure: false);
+
+                if (result.Succeeded)
+                {
+                    var user = _pool.GetUser(loginVM.Email);
+
+                    if (user != null)
+                    {
+                        var tokenString = GenerateJSONWebToken(user);
+                        jsonResponse.token = tokenString;
+                        jsonResponse.status = "OK";
+                        return Json(jsonResponse);
+                    }
+                }
+                else if (result.IsLockedOut)
+                {
+                    jsonResponse.token = "";
+                    jsonResponse.status = "Locked Out";
+                    return Json(jsonResponse);
+                }
+            }
+            jsonResponse.token = "";
+            jsonResponse.status = "Invalid Login";
+            return Json(jsonResponse);
+        }
+
         List<Claim> AddUserRoleClaims(List<Claim> claims, string Email)
         {
-            // Get current user's roles. 
+            // Get current user's role. 
             var Role = _context.Users.Where(ur => ur.UserName == Email).FirstOrDefault();
 
             var userRole = _context.Roles.Where(ur => ur.RoleId == Role.RoleId).FirstOrDefault();
                           
-            // Add each of the user's roles to the claims list.
+            // Add user's role to the claims list.
 
             claims.Add(new Claim(ClaimTypes.Role, userRole.RoleName));
 
             return claims;
         }
 
-        string GenerateJSONWebToken(CognitoUser user, LoginVM loginVM)
+        string GenerateJSONWebToken(CognitoUser user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.Sub, loginVM.Email),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserID),
                 new Claim(JwtRegisteredClaimNames.Jti,
                             Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.UserID)
             };
 
-            claims = AddUserRoleClaims(claims, loginVM.Email);
+            claims = AddUserRoleClaims(claims, user.UserID);
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],

@@ -1,7 +1,7 @@
 ﻿{
   "iisSettings": {
-    "windowsAuthentication": false, 
-    "anonymousAuthentication": true, 
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:54429",
       "sslPort": 44363
@@ -12,16 +12,19 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
+        "AWS_SECRET_ACCESS_KEY": "Xhw6rCzIZcpHURi2k35qSWUFMYLnwfsTSZ1JyDLM",
+        "AWS_SESSION_TOKEN": "FwoGZXIvYXdzEOL//////////wEaDNAkhDhEWuMoJra/AiLGAXfB92RqlUHNRttKZdlbBYbz6R7VDESRjKGvn+c+rJDLCM4T5tmzDEH3iFNWVG8pY4FJn1MLWVBS5BOYAyhCPhPqGJ7ZbSUHfh4JcSHKG1Fsf81luXjO5eFE84YzvPMPtlZ3lbgQrXZsWlTRbjFc86ZjQ8/xQN6DGtV7vouhGhnE3XNzEZ1QcQkcMDpAgFsuJ57Fs9BADSuZkES0LiFKYCJjk12Oe0MWT4l35o5+Rx2kWhRLl++IqdEXTLBPE1VF45Uc3ihycij/usfzBTItFUzgjIKgfKniQaJU9iSpKZOZDrtlFjxFozgMEpPfc94uFpvVjbW0FwgQUzAm",
+        "AWS_ACCESS_KEY_ID": "",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "BirthDayCards": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }
   }
 }

@@ -42,13 +42,15 @@ namespace BirthDayCards.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<JsonResult> Register([FromBody]LoginVM loginVM)
+        public async Task<JsonResult> Register([FromBody]RegisterVM registerVM)
         {
             dynamic jsonResponse = new JObject();
 
-            var user = _pool.GetUser(loginVM.UserName);//these line was changed
-            user.Attributes.Add(CognitoAttribute.Email.AttributeName, loginVM.Email); //these line was changed
-            var result = await _userManager.CreateAsync(user, loginVM.Password);
+            var user = _pool.GetUser(registerVM.Username);//these line was changed
+            user.Attributes.Add(CognitoAttribute.Email.AttributeName, registerVM.Email); //these line was changed
+            var result = await _userManager.CreateAsync(user, registerVM.Password);
+
+            
 
             if (result.Succeeded)
             {
@@ -57,7 +59,7 @@ namespace BirthDayCards.Controllers
                     Users userRole = new Users
                     {
                         RoleId = 3,
-                        UserName = loginVM.Email
+                        UserName = registerVM.Email
                     };
 
                     _context.Users.Add(userRole);
@@ -69,8 +71,9 @@ namespace BirthDayCards.Controllers
                     return Json(jsonResponse);
                 }
             }
+
             jsonResponse.token = "";
-            jsonResponse.status = "Invalid Login";
+            jsonResponse.status = "Cannot register this email";
             return Json(jsonResponse);
         }
 
@@ -122,14 +125,69 @@ namespace BirthDayCards.Controllers
             return Json(jsonResponse);
         }
 
-        List<Claim> AddUserRoleClaims(List<Claim> claims, string Email)
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswodVM forgotPasswodVM)
         {
-            // Get current user's role. 
+            dynamic jsonResponse = new JObject();
+
+            if (ModelState.IsValid)
+            {
+                var user = _pool.GetUser(forgotPasswodVM.Email);
+
+                if (user != null)
+                {
+                    await user.ForgotPasswordAsync();
+
+                    jsonResponse.status = "OK";
+                    return Json(jsonResponse);
+                }
+                else
+                {
+                    jsonResponse.status = "OK";
+                    return Json(jsonResponse);
+                }
+            }
+
+            jsonResponse.status = "Internal error while recovering password";
+            return Json(jsonResponse);
+        }
+
+        [HttpPost]
+        [Route("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordVM resetPasswordVM)
+        {
+            dynamic jsonResponse = new JObject();
+
+            if (ModelState.IsValid)
+            {
+                var user = _pool.GetUser(resetPasswordVM.Email);
+
+                if (user != null)
+                {
+                    var result = await _userManager.ResetPasswordAsync(user, resetPasswordVM.ResetToken, resetPasswordVM.Password);
+
+                    if (result.Succeeded)
+                    {
+                        jsonResponse.status = "OK";
+                        return Json(jsonResponse);
+                    }
+                }
+                else
+                {
+                    jsonResponse.status = "Internal Error while reseting password";
+                    return Json(jsonResponse);
+                }
+            }
+
+            jsonResponse.status = "Internal error while reseting password";
+            return Json(jsonResponse);
+        }
+            List<Claim> AddUserRoleClaims(List<Claim> claims, string Email)
+        { 
             var Role = _context.Users.Where(ur => ur.UserName == Email).FirstOrDefault();
 
             var userRole = _context.Roles.Where(ur => ur.RoleId == Role.RoleId).FirstOrDefault();
-                          
-            // Add user's role to the claims list.
 
             claims.Add(new Claim(ClaimTypes.Role, userRole.RoleName));
 

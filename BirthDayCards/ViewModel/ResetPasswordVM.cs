@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace BirthDayCards.ViewModel
 {
-    public class LoginVM
+    public class ResetPasswordVM
     {
         [Required]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
+        public string ResetToken { get; set; }
+
+        [Required]
         public string Password { get; set; }
-        public bool RememberMe { get; set; }
+
+        [Required]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 }

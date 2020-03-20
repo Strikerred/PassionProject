@@ -17,11 +17,20 @@ namespace BirthDayCards.Models
 
         public virtual DbSet<BdEvent> BdEvent { get; set; }
         public virtual DbSet<BdayPerson> BdayPerson { get; set; }
+        public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<PersonAccount> PersonAccount { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Template> Template { get; set; }
         public virtual DbSet<TemplateBdayPerson> TemplateBdayPerson { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -122,10 +131,30 @@ namespace BirthDayCards.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<Payments>(entity =>
+            {
+                entity.HasKey(e => e.PaymentId)
+                    .HasName("PK__Payments__9B556A38FA26ACDE");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.UserNameNavigation)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.UserName)
+                    .HasConstraintName("FK__Payments__UserNa__123EB7A3");
+            });
+
             modelBuilder.Entity<PersonAccount>(entity =>
             {
                 entity.HasKey(e => e.PersonId)
-                    .HasName("PK__Person_A__AA2FFBE5E7102F39");
+                    .HasName("PK__Person_A__AA2FFBE54A5DD26E");
 
                 entity.ToTable("Person_Account");
 
@@ -171,7 +200,7 @@ namespace BirthDayCards.Models
                 entity.HasOne(d => d.UserNameNavigation)
                     .WithMany(p => p.PersonAccount)
                     .HasForeignKey(d => d.UserName)
-                    .HasConstraintName("FK__Person_Ac__UserN__0C85DE4D");
+                    .HasConstraintName("FK__Person_Ac__UserN__0F624AF8");
             });
 
             modelBuilder.Entity<Roles>(entity =>

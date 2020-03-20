@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BirthDayCards.ViewModel
 {
-    public class ResetPasswordVM
+    public class ResetPasswordRM
     {
         [Required]
         [EmailAddress]

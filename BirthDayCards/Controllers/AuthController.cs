@@ -42,7 +42,7 @@ namespace BirthDayCards.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<JsonResult> Register([FromBody]RegisterVM registerVM)
+        public async Task<JsonResult> Register([FromBody]RegisterRM registerVM)
         {
             dynamic jsonResponse = new JObject();
 
@@ -79,7 +79,7 @@ namespace BirthDayCards.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<JsonResult> Login([FromBody]LoginVM loginVM)
+        public async Task<JsonResult> Login([FromBody]LoginRM loginVM)
         {
             dynamic jsonResponse = new JObject();
 
@@ -127,7 +127,7 @@ namespace BirthDayCards.Controllers
 
         [HttpPost]
         [Route("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswodVM forgotPasswodVM)
+        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswodRM forgotPasswodVM)
         {
             dynamic jsonResponse = new JObject();
 
@@ -155,7 +155,7 @@ namespace BirthDayCards.Controllers
 
         [HttpPost]
         [Route("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordVM resetPasswordVM)
+        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordRM resetPasswordVM)
         {
             dynamic jsonResponse = new JObject();
 

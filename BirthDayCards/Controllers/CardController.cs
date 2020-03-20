@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BirthDayCards.Repositories;
 using BirthDayCards.ResponseModel;
+using Stripe;
+using Microsoft.Extensions.Configuration;
 
 namespace BirthDayCards.Controllers
 {
@@ -18,14 +20,18 @@ namespace BirthDayCards.Controllers
     public class CardController : Controller
     {
         private BirthDayCard_dbContext _cardRepo;
+        private IConfiguration _config;
 
-        public CardController(BirthDayCard_dbContext cardRepo)
+        public object Configuration { get; private set; }
+
+        public CardController(BirthDayCard_dbContext cardRepo, IConfiguration config)
         {
             _cardRepo = cardRepo;
+            _config = config;
         }
 
         [HttpGet]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<List<Template>> GetAll()
         {
             var cards = new CardRepo(_cardRepo);
@@ -38,7 +44,22 @@ namespace BirthDayCards.Controllers
             return Ok(response);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<>>
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> Charge([FromBody]PaymentRM paymentRM)
+        {
+            var claim = HttpContext.User.Claims.ElementAt(0);
+            string userName = claim.Value;
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var purchase = await new CardRepo(_cardRepo, _config).Purchase(paymentRM, userName);
+
+            if (!purchase.Item1)
+            {
+                return BadRequest(purchase.Item2);
+            }
+
+            return Ok(purchase.Item2);
+        }
     }
 }

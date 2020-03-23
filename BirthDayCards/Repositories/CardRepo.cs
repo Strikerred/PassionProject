@@ -50,6 +50,26 @@ namespace BirthDayCards.Repositories
             return false;
         }
 
+        public bool GetCard(int id, out TemplateRM response)
+        {
+            var target = _context.Template.SingleOrDefault(t => t.TemplateId == id);
+
+            if (target != null)
+            {
+                response = new TemplateRM
+                {
+                    TemplateId = target.TemplateId,
+                    TemplateUrl = target.TemplateUrl,
+                    Gender = target.Gender
+                };
+                return true;
+            }
+
+            //template not found
+            response = null;
+            return false;
+        }
+
         public async Task<Tuple<bool, object>> Purchase(PaymentRM paymentRM, string userName)
         {
             StripeConfiguration.ApiKey = _config["Stripe:SecretKey"];

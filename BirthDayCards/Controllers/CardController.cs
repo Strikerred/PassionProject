@@ -44,6 +44,20 @@ namespace BirthDayCards.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public ActionResult<TemplateRM> Get(int id)
+        {
+            var card = new CardRepo(_cardRepo);
+
+            if (!card.GetCard(id, out TemplateRM response))
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
+        }
+
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Charge([FromBody]PaymentRM paymentRM)

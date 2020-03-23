@@ -19,6 +19,7 @@ namespace BirthDayCards.Models
         public virtual DbSet<BdayPerson> BdayPerson { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<PersonAccount> PersonAccount { get; set; }
+        public virtual DbSet<Recipients> Recipients { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Template> Template { get; set; }
         public virtual DbSet<TemplateBdayPerson> TemplateBdayPerson { get; set; }
@@ -201,6 +202,22 @@ namespace BirthDayCards.Models
                     .WithMany(p => p.PersonAccount)
                     .HasForeignKey(d => d.UserName)
                     .HasConstraintName("FK__Person_Ac__UserN__0F624AF8");
+            });
+
+            modelBuilder.Entity<Recipients>(entity =>
+            {
+                entity.Property(e => e.BdayId).HasColumnName("BDayId");
+
+                entity.Property(e => e.Recipients1)
+                    .IsRequired()
+                    .HasColumnName("Recipients")
+                    .HasMaxLength(999)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Bday)
+                    .WithMany(p => p.Recipients)
+                    .HasForeignKey(d => d.BdayId)
+                    .HasConstraintName("FK__Recipient__BDayI__151B244E");
             });
 
             modelBuilder.Entity<Roles>(entity =>

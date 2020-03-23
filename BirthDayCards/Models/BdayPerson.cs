@@ -10,6 +10,7 @@ namespace BirthDayCards.Models
         public BdayPerson()
         {
             BdEvent = new HashSet<BdEvent>();
+            Recipients = new HashSet<Recipients>();
             TemplateBdayPerson = new HashSet<TemplateBdayPerson>();
         }
 
@@ -21,6 +22,7 @@ namespace BirthDayCards.Models
         public string BdComingAge { get; set; }
 
         public virtual ICollection<BdEvent> BdEvent { get; set; }
+        public virtual ICollection<Recipients> Recipients { get; set; }
         public virtual ICollection<TemplateBdayPerson> TemplateBdayPerson { get; set; }
     }
 }

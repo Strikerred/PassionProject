@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BirthDayCards.Models
 {
@@ -11,6 +13,7 @@ namespace BirthDayCards.Models
             PersonAccount = new HashSet<PersonAccount>();
         }
 
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string UserName { get; set; }
         public int? RoleId { get; set; }
 

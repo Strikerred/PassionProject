@@ -15,11 +15,13 @@ namespace BirthDayCards.service
     {
         private EmailSettings _emailSettings;
         private BirthDayCard_dbContext _context;
+        private IConfiguration _config;
 
-        public EmailHelper(EmailSettings emailSettings, BirthDayCard_dbContext context)
+        public EmailHelper(IConfiguration config, BirthDayCard_dbContext context)
         {
-            _emailSettings = emailSettings;
+            //_emailSettings = emailSettings;
             _context = context;
+            _config = config;
         }
 
 
@@ -37,7 +39,7 @@ namespace BirthDayCards.service
             {
                 MailMessage mail = new MailMessage()
                 {
-                    From = new MailAddress(_emailSettings.FromEmail, _emailSettings.DisplayName)
+                    From = new MailAddress(_config["EmailSettings_FromEmail"], _config["EmailSettings_DisplayName"])
                 };
 
                 foreach (string recipient in recipients)
@@ -72,8 +74,8 @@ namespace BirthDayCards.service
 
                 mail.Priority = MailPriority.High;
 
-                SmtpClient smtp = new SmtpClient(_emailSettings.Domain, _emailSettings.Port);
-                smtp.Credentials = new NetworkCredential(_emailSettings.UsernameLogin, _emailSettings.UsernamePassword);
+                SmtpClient smtp = new SmtpClient(_config["EmailSettings_Domain"], 587);
+                smtp.Credentials = new NetworkCredential(_config["EmailSettings_UsernameLogin"], _config["EmailSettings_UsernamePassword"]);
                 smtp.EnableSsl = false;
 
                 smtp.Send(mail);

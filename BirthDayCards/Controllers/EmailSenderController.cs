@@ -22,13 +22,15 @@ namespace BirthDayCards.Controllers
     {
         private BirthDayCard_dbContext _cardRepo;
         private EmailSettings _emailSettings;
+        private IConfiguration _config;
 
         public object Configuration { get; private set; }
 
-        public EmailSenderController(BirthDayCard_dbContext cardRepo, IOptions<EmailSettings> emailSettings)
+        public EmailSenderController(BirthDayCard_dbContext cardRepo, IOptions<EmailSettings> emailSettings, IConfiguration config)
         {
             _cardRepo = cardRepo;
             _emailSettings = emailSettings.Value;
+            _config = config;
         }
 
         [HttpPost("{templateId}")]
@@ -36,7 +38,7 @@ namespace BirthDayCards.Controllers
         public async Task<ActionResult> SendInvitations(int templateId, [FromBody]RecipientsRM recipientsRM)
         {
 
-            var recipients = await new EmailHelper(_emailSettings, _cardRepo).SendEmails(templateId, recipientsRM.recipients, recipientsRM.BdayId);
+            var recipients = await new EmailHelper(_config, _cardRepo).SendEmails(templateId, recipientsRM.recipients, recipientsRM.BdayId);
 
             if (!recipients.Item1)
             {

@@ -72,7 +72,7 @@ namespace BirthDayCards
                 };
             });
 
-            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            //services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             services.AddDbContext<BirthDayCard_dbContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));

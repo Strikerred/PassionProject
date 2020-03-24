@@ -35,9 +35,6 @@ namespace BirthDayCards.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> SendInvitations(int templateId, [FromBody]RecipientsRM recipientsRM)
         {
-            //var claim = HttpContext.User.Claims.ElementAt(0);
-            //string userName = claim.Value;
-            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var recipients = await new EmailHelper(_emailSettings, _cardRepo).SendEmails(templateId, recipientsRM.recipients, recipientsRM.BdayId);
 

@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -12,9 +12,9 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "AWS_SECRET_ACCESS_KEY": "Xhw6rCzIZcpHURi2k35qSWUFMYLnwfsTSZ1JyDLM",
-        "AWS_SESSION_TOKEN": "FwoGZXIvYXdzEOL//////////wEaDNAkhDhEWuMoJra/AiLGAXfB92RqlUHNRttKZdlbBYbz6R7VDESRjKGvn+c+rJDLCM4T5tmzDEH3iFNWVG8pY4FJn1MLWVBS5BOYAyhCPhPqGJ7ZbSUHfh4JcSHKG1Fsf81luXjO5eFE84YzvPMPtlZ3lbgQrXZsWlTRbjFc86ZjQ8/xQN6DGtV7vouhGhnE3XNzEZ1QcQkcMDpAgFsuJ57Fs9BADSuZkES0LiFKYCJjk12Oe0MWT4l35o5+Rx2kWhRLl++IqdEXTLBPE1VF45Uc3ihycij/usfzBTItFUzgjIKgfKniQaJU9iSpKZOZDrtlFjxFozgMEpPfc94uFpvVjbW0FwgQUzAm",
-        "AWS_ACCESS_KEY_ID": "",
+        "AWS_SECRET_ACCESS_KEY": "lgK0tHkZckipa7pq/j27wcwBxUJAp1Ag2j5nSFJe",
+        "AWS_SESSION_TOKEN": "FwoGZXIvYXdzEGcaDKPrh0jb/sRCDdZlIyLGAXGm/zpqZ6PwXE1Pcjudgz2yZfrmyungR7n1P3/6NZ6lsvc9+HjuvO3LxOwAU71OBXCTzSlbynE7rsvdJoNCXjkqMjeo4Ny4Ge8NnZUrzwQRPEIIVU7Ohb9AwhV+2aw7YZBjwN+jYkf3DpEx2n6sqhk8vzyln3paNlSXltMp9ulB6YrC6R/PM91ZZCL3n1WMSfcpDeAiEkguZAR7FMn6zvcwnAMClTKghpEm2dCxqF/jnqkV7pKn8MttSbtnO9E2TTkOIDCRmijbzOTzBTIt91qfmgn7D/NV32rO+R989cDlF7KBmN3b/Jq6F5DTu09ZXRxPX4OkmY/fTeeL",
+        "AWS_ACCESS_KEY_ID": "ASIA4GCFRDFMWJC3JWP3",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },

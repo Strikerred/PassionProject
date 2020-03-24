@@ -77,9 +77,6 @@ namespace BirthDayCards
 
             services.AddDbContext<BirthDayCard_dbContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            //services.AddDefaultIdentity<IdentityUser>()
-            //    .AddDefaultUI(UIFramework.Bootstrap4)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddCognitoIdentity();
 

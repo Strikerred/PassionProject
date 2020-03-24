@@ -65,10 +65,10 @@ namespace BirthDayCards
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     //Setup validate data
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    ValidAudience = Configuration["Jwt:Issuer"],
+                    ValidIssuer = Configuration["Jwt_Issuer"],
+                    ValidAudience = Configuration["Jwt_Issuer"],
                     IssuerSigningKey
-                = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt_Key"]))
                 };
             });
 

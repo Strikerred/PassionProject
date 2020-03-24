@@ -72,7 +72,7 @@ namespace BirthDayCards.Repositories
 
         public async Task<Tuple<bool, object>> Purchase(PaymentRM paymentRM, string userName)
         {
-            StripeConfiguration.ApiKey = _config["Stripe:SecretKey"];
+            StripeConfiguration.ApiKey = _config["Stripe_SecretKey"];
 
             var optionsToken = new TokenCreateOptions
             {

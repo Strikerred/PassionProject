@@ -196,7 +196,7 @@ namespace BirthDayCards.Controllers
 
         string GenerateJSONWebToken(CognitoUser user)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt_Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserID),
@@ -207,8 +207,8 @@ namespace BirthDayCards.Controllers
 
             claims = AddUserRoleClaims(claims, user.UserID);
 
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-                _config["Jwt:Issuer"],
+            var token = new JwtSecurityToken(_config["Jwt_Issuer"],
+                _config["Jwt_Issuer"],
                 claims,
                 expires: DateTime.Now.AddMinutes(120),
                 signingCredentials: credentials);

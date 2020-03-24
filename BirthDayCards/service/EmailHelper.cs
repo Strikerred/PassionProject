@@ -71,9 +71,6 @@ namespace BirthDayCards.service
                    null, MediaTypeNames.Text.Html));
 
                 mail.Priority = MailPriority.High;
-                
-
-                //mail.Attachments.Add(new Attachment($@"{targetTemplate.TemplateUrl}"));
 
                 SmtpClient smtp = new SmtpClient(_emailSettings.Domain, _emailSettings.Port);
                 smtp.Credentials = new NetworkCredential(_emailSettings.UsernameLogin, _emailSettings.UsernamePassword);
@@ -103,7 +100,6 @@ namespace BirthDayCards.service
             {
                 return new Tuple<bool, object>(false, e);
             }
-            //return new Tuple<bool, object>(false, "Email could not been sent to recipients");
         }
     }
 }

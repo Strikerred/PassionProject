@@ -3,6 +3,7 @@ import './App.css'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import Home from './Util/Home'
 import Navbar from './Util/Navbar'
+import Card from './components/Card'
 import Login from './components/Login'
 import Register from './components/Register'
 
@@ -114,7 +115,7 @@ register(username, email, password, confirmPassword) {
 
             this.setState({token: sessionStorage.AUTH_TOKEN})
             this.setState({userName: sessionStorage.USERNAME})
-            this.setState({loginMessage:"The user has been registered and is logged in."}); 
+            this.setState({loginMessage:"The user has been registered and is logged in, please verify your email to have full access."}); 
           }
           else {
             this.setState({loginMessage:
@@ -166,7 +167,8 @@ register(username, email, password, confirmPassword) {
       <Switch>    
         <Route exact path="/" render = {(props) => <Home {...props}/>}/>
         <Route exact path="/login" render = {(props) => <Login {...props} auth = {session} />}/>      
-        <Route exact path="/Register" render = {(props) => <Register {...props} auth = {session} />}/>                  
+        <Route exact path="/Register" render = {(props) => <Register {...props} auth = {session} />}/>
+        <Route exact path="/card/:id" render = {(props) => <Card {...props} auth = {session}/>}/>                  
         <Route default render = {(props) => <Home {...props} auth = {session}/>}/>                  
       </Switch>
       </div>

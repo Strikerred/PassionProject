@@ -16,32 +16,19 @@ export default class Navbar extends React.Component {
     render() {   
         return (
             <nav className="navbar">
-            <div className="navbar-menu">
-                <div className="navbar-start">
-                <Link to="/" className="navbar-item">Home</Link>         
-                </div>
-                <div className="navbar-end">
-                    <div className="navbar-item">
-                        <div>
-                            {this.props.auth.sessionStorage 
-                            ? <p>Welcome! {this.props.auth.userName}</p>
-                            : <Link to="/login" className="button is-light">Log in</Link>
-                            } 
-                        </div>
-                        <div>
-                            {this.props.auth.sessionStorage 
-                            ? <p>Welcome! {this.props.auth.userName}</p>
-                            : <Link to="/register" className="button is-light">Register</Link>
-                            } 
-                        </div>
-                        <div>
-                            {this.props.auth.sessionStorage && (
-                                <Link to="/login" onClick = {this.logOut} className="button is-light">Log out</Link>
-                            )}                        
+                <div className="navbar-menu">
+                    <div className="navbar-start">
+                        <Link to="/" className="navbar-item">Home</Link>
+                        {!this.props.auth.sessionStorage && <Link className="navbar-item mx-2" to="/login" >Log in</Link>}  
+                        {!this.props.auth.sessionStorage && <Link className="navbar-item" to="/register" >Register</Link>}          
+                        {this.props.auth.sessionStorage && <Link className="navbar-item ml-2" to="/login" onClick = {this.logOut} >Log out</Link>}                        
+                    </div>
+                    <div className="navbar-end">
+                        <div className="navbar-item">
+                            {this.props.auth.sessionStorage && (<p>Welcome! {this.props.auth.userName}</p>)}                       
                         </div>
                     </div>
                 </div>
-            </div>
             </nav>
         )
     }

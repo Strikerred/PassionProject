@@ -15,7 +15,6 @@ componentDidMount(){
   fetch(API_INVOKE_URL+'/card')
   .then(response => response.json())
   .then(data => {
-      console.log(data)
       this.setState({cards: data, loading:false});      
     }); 
 }
@@ -32,7 +31,7 @@ componentDidMount(){
               <p className="card-text">Price: $6.00</p>
               <p className="card-text">Package of 25 invitations</p>
             </div>
-            <a href={`/movie/${card.TemplateId}`} className="badge badge-pill badge-info m-3">Buy</a>
+            <a href={`/card/${card.TemplateId}`} className="badge badge-pill badge-info m-3">Buy</a>
           </div>
           )}
         </div>

@@ -21,15 +21,13 @@ namespace BirthDayCards.Controllers
     public class EmailSenderController : Controller
     {
         private BirthDayCard_dbContext _cardRepo;
-        private EmailSettings _emailSettings;
         private IConfiguration _config;
 
         public object Configuration { get; private set; }
 
-        public EmailSenderController(BirthDayCard_dbContext cardRepo, IOptions<EmailSettings> emailSettings, IConfiguration config)
+        public EmailSenderController(BirthDayCard_dbContext cardRepo, IConfiguration config)
         {
             _cardRepo = cardRepo;
-            _emailSettings = emailSettings.Value;
             _config = config;
         }
 

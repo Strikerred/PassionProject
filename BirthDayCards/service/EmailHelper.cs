@@ -13,13 +13,11 @@ namespace BirthDayCards.service
 {
     public class EmailHelper
     {
-        private EmailSettings _emailSettings;
         private BirthDayCard_dbContext _context;
         private IConfiguration _config;
 
         public EmailHelper(IConfiguration config, BirthDayCard_dbContext context)
         {
-            //_emailSettings = emailSettings;
             _context = context;
             _config = config;
         }

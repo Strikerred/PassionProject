@@ -31,7 +31,6 @@ namespace BirthDayCards.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<List<Template>> GetAll()
         {
             var cards = new CardRepo(_cardRepo);

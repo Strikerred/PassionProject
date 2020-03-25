@@ -68,6 +68,7 @@ namespace BirthDayCards.Controllers
                     var tokenString = GenerateJSONWebToken(user);
                     jsonResponse.token = tokenString;
                     jsonResponse.status = "OK";
+                    jsonResponse.role = _context.Roles.Where(r => r.RoleId == userRole.RoleId).FirstOrDefault().RoleName;
                     return Json(jsonResponse);
                 }
             }
@@ -96,6 +97,7 @@ namespace BirthDayCards.Controllers
                         var tokenString = GenerateJSONWebToken(user);
                         jsonResponse.token = tokenString;
                         jsonResponse.status = "OK";
+                        jsonResponse.userName = user.UserID;
                         return Json(jsonResponse);
                     }
                 }

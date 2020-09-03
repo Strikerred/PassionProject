@@ -20,7 +20,9 @@ namespace BirthDayCards.Models
         public string BdFirstName { get; set; }
         public string BdLastName { get; set; }
         public string BdComingAge { get; set; }
+        public string UserName { get; set; }
 
+        public virtual Users UserNameNavigation { get; set; }
         public virtual ICollection<BdEvent> BdEvent { get; set; }
         public virtual ICollection<Recipients> Recipients { get; set; }
         public virtual ICollection<TemplateBdayPerson> TemplateBdayPerson { get; set; }

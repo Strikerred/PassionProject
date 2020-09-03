@@ -18,7 +18,6 @@ namespace BirthDayCards.Models
         public virtual DbSet<BdEvent> BdEvent { get; set; }
         public virtual DbSet<BdayPerson> BdayPerson { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
-        public virtual DbSet<PersonAccount> PersonAccount { get; set; }
         public virtual DbSet<Recipients> Recipients { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Template> Template { get; set; }
@@ -32,7 +31,7 @@ namespace BirthDayCards.Models
             modelBuilder.Entity<BdEvent>(entity =>
             {
                 entity.HasKey(e => e.EventId)
-                    .HasName("PK__BD_Event__7944C810C083E71A");
+                    .HasName("PK__BD_Event__7944C8107C7B94D0");
 
                 entity.ToTable("BD_Event");
 
@@ -93,13 +92,13 @@ namespace BirthDayCards.Models
                 entity.HasOne(d => d.Bday)
                     .WithMany(p => p.BdEvent)
                     .HasForeignKey(d => d.BdayId)
-                    .HasConstraintName("FK__BD_Event__BDayId__04E4BC85");
+                    .HasConstraintName("FK__BD_Event__BDayId__2B0A656D");
             });
 
             modelBuilder.Entity<BdayPerson>(entity =>
             {
                 entity.HasKey(e => e.BdayId)
-                    .HasName("PK__BDayPers__E6AFE14EAA92BBC1");
+                    .HasName("PK__BDayPers__E6AFE14E843DAD29");
 
                 entity.ToTable("BDayPerson");
 
@@ -108,7 +107,7 @@ namespace BirthDayCards.Models
                 entity.Property(e => e.BdComingAge)
                     .IsRequired()
                     .HasColumnName("Bd_Coming_Age")
-                    .HasMaxLength(1)
+                    .HasMaxLength(2)
                     .IsUnicode(false);
 
                 entity.Property(e => e.BdFirstName)
@@ -122,6 +121,15 @@ namespace BirthDayCards.Models
                     .HasColumnName("BD_LastName")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.UserNameNavigation)
+                    .WithMany(p => p.BdayPerson)
+                    .HasForeignKey(d => d.UserName)
+                    .HasConstraintName("FK__BDayPerso__UserN__245D67DE");
             });
 
             modelBuilder.Entity<Payments>(entity =>
@@ -144,58 +152,6 @@ namespace BirthDayCards.Models
                     .HasConstraintName("FK__Payments__UserNa__123EB7A3");
             });
 
-            modelBuilder.Entity<PersonAccount>(entity =>
-            {
-                entity.HasKey(e => e.PersonId)
-                    .HasName("PK__Person_A__AA2FFBE54A5DD26E");
-
-                entity.ToTable("Person_Account");
-
-                entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.City)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PostalCode)
-                    .IsRequired()
-                    .HasMaxLength(6)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Province)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UserName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.UserNameNavigation)
-                    .WithMany(p => p.PersonAccount)
-                    .HasForeignKey(d => d.UserName)
-                    .HasConstraintName("FK__Person_Ac__UserN__0F624AF8");
-            });
-
             modelBuilder.Entity<Recipients>(entity =>
             {
                 entity.Property(e => e.BdayId).HasColumnName("BDayId");
@@ -209,7 +165,7 @@ namespace BirthDayCards.Models
                 entity.HasOne(d => d.Bday)
                     .WithMany(p => p.Recipients)
                     .HasForeignKey(d => d.BdayId)
-                    .HasConstraintName("FK__Recipient__BDayI__151B244E");
+                    .HasConstraintName("FK__Recipient__BDayI__2DE6D218");
             });
 
             modelBuilder.Entity<Roles>(entity =>
@@ -239,7 +195,7 @@ namespace BirthDayCards.Models
             modelBuilder.Entity<TemplateBdayPerson>(entity =>
             {
                 entity.HasKey(e => e.TempBday)
-                    .HasName("PK__Template__971E5D9344A9C485");
+                    .HasName("PK__Template__971E5D93022621B7");
 
                 entity.ToTable("Template_BdayPerson");
 
@@ -250,12 +206,12 @@ namespace BirthDayCards.Models
                 entity.HasOne(d => d.Bday)
                     .WithMany(p => p.TemplateBdayPerson)
                     .HasForeignKey(d => d.BdayId)
-                    .HasConstraintName("FK__Template___BDayI__07C12930");
+                    .HasConstraintName("FK__Template___BDayI__2739D489");
 
                 entity.HasOne(d => d.Template)
                     .WithMany(p => p.TemplateBdayPerson)
                     .HasForeignKey(d => d.TemplateId)
-                    .HasConstraintName("FK__Template___Templ__08B54D69");
+                    .HasConstraintName("FK__Template___Templ__282DF8C2");
             });
 
             modelBuilder.Entity<Users>(entity =>

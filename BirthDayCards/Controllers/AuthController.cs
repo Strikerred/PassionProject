@@ -50,8 +50,6 @@ namespace BirthDayCards.Controllers
             user.Attributes.Add(CognitoAttribute.Email.AttributeName, registerVM.Email); //these line was changed
             var result = await _userManager.CreateAsync(user, registerVM.Password);
 
-            
-
             if (result.Succeeded)
             {
                 if (user != null)
@@ -68,6 +66,7 @@ namespace BirthDayCards.Controllers
                     var tokenString = GenerateJSONWebToken(user);
                     jsonResponse.token = tokenString;
                     jsonResponse.status = "OK";
+                    jsonResponse.role = _context.Roles.Where(r => r.RoleId == userRole.RoleId).FirstOrDefault().RoleName;
                     return Json(jsonResponse);
                 }
             }
@@ -96,6 +95,7 @@ namespace BirthDayCards.Controllers
                         var tokenString = GenerateJSONWebToken(user);
                         jsonResponse.token = tokenString;
                         jsonResponse.status = "OK";
+                        jsonResponse.userName = user.UserID;
                         return Json(jsonResponse);
                     }
                 }
@@ -113,7 +113,7 @@ namespace BirthDayCards.Controllers
 
         [HttpPost]
         [Route("Logout")]
-        public async Task<IActionResult> Logout()
+        public async Task<JsonResult> Logout()
         {
             dynamic jsonResponse = new JObject();
 
@@ -127,7 +127,7 @@ namespace BirthDayCards.Controllers
 
         [HttpPost]
         [Route("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswodRM forgotPasswodVM)
+        public async Task<JsonResult> ForgotPassword([FromBody]ForgotPasswodRM forgotPasswodVM)
         {
             dynamic jsonResponse = new JObject();
 
@@ -155,7 +155,7 @@ namespace BirthDayCards.Controllers
 
         [HttpPost]
         [Route("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordRM resetPasswordVM)
+        public async Task<JsonResult> ResetPassword([FromBody]ResetPasswordRM resetPasswordVM)
         {
             dynamic jsonResponse = new JObject();
 

@@ -9,8 +9,8 @@ namespace BirthDayCards.Models
     {
         public Users()
         {
+            BdayPerson = new HashSet<BdayPerson>();
             Payments = new HashSet<Payments>();
-            PersonAccount = new HashSet<PersonAccount>();
         }
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -18,7 +18,7 @@ namespace BirthDayCards.Models
         public int? RoleId { get; set; }
 
         public virtual Roles Role { get; set; }
+        public virtual ICollection<BdayPerson> BdayPerson { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
-        public virtual ICollection<PersonAccount> PersonAccount { get; set; }
     }
 }

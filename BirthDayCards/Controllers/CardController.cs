@@ -14,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BirthDayCards.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth/[controller]")]
     [ApiController]
     [Produces("application/json")]
     public class CardController : Controller
@@ -31,7 +31,6 @@ namespace BirthDayCards.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<List<Template>> GetAll()
         {
             var cards = new CardRepo(_cardRepo);
@@ -45,7 +44,7 @@ namespace BirthDayCards.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<TemplateRM> Get(int id)
         {
             var card = new CardRepo(_cardRepo);
@@ -59,7 +58,7 @@ namespace BirthDayCards.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Charge([FromBody]PaymentRM paymentRM)
         {
             var claim = HttpContext.User.Claims.ElementAt(0);
